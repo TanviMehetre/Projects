@@ -1,0 +1,196 @@
+<form class="inline-form pt-1 pb-1" style="background-color: #43939c;" method="post" action="/filter">
+    <div class="form-group row mb-1">
+        <div class="col-md-6 d-inline-flex">
+            <label class="col-form-label col-md-4 col-sm-3 col-3 text-end me-5 text-light" for="project">Project:</label>
+            <select class="form-select" id="project" name="project">
+                <option value="1">All Projects</option>
+                {{#each projects}}
+                    <option value="{{this.project}}"
+                        {{#if ../p}}
+                            {{#if ../mode}}
+                                {{#if (eq ../mode "filter")}}
+                                    {{#if (eq this.project ../p)}}selected{{/if}}
+                                {{/if}}
+                            {{/if}}
+                        {{/if}}>
+                        {{this.project}}
+                    </option>
+                {{/each}}
+            </select>
+        </div>
+
+        <div class="col-md-6 d-inline-flex">
+            <label class="col-form-label col-md-3 col-sm-3 col-3 text-end me-5 text-light">Member:</label>
+            <select class="form-select w-50" id="member" name="member">
+                <option value="1">All Members</option>
+                {{#each employees}}
+                    <option value="{{this.employeeName}}"
+                        {{#if ../member}}
+                            {{#if ../mode}}
+                                {{#if (eq ../mode "filter")}}
+                                    {{#if (eq this.employeeName ../member)}}selected{{/if}}
+                                {{/if}}
+                            {{/if}}
+                        {{/if}}>
+                        {{this.employeeName}}
+                    </option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-6 d-inline-flex">
+            <label class="col-form-label col-md-4 col-sm-3 col-3 text-end me-5 text-light" for="date_range">Date Range:</label>
+            <input class="form-control me-5" id="date_range" type="date" name="date_range" value="{{#if date_from}}{{date_from}}{{else}}2024-09-20{{/if}}">
+            <input class="form-control" id="range2" type="date" name="range2" value="{{#if date_to}}{{date_to}}{{else}}2025-09-20{{/if}}">
+        </div>
+        <div class="col-md-6 d-inline-flex">
+            <button id="filter" class="btn w-auto col-form-label col-md-4 col-sm-3 col-3 text-start text-light" type="submit" name="action" value="filter">
+                <i class="fa-solid fa-filter fa-lg" style="color: #ffffff;"></i> Filter
+            </button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-sm table-borderless">
+    <thead class="bg-dark table-dark text-white fw-light">
+        <tr>
+            <th class="text-center col-1 fw-light py-2 ps-2">Action <a href="{{route 'addTime'}}"><i class="ms-2 fa-solid fa-circle-plus text-warning"></i></a></th>
+            <th class="col-2 fw-light py-2">Name</th>
+            <th class="col-1 fw-light py-2">Date</th>
+            <th class="col-2 fw-light py-2">Project</th>
+            <th class="col-2 fw-light py-2">Task</th>
+            <th class="col-1 fw-light py-2">Time From</th>
+            <th class="col-1 fw-light py-2">Time To</th>
+            <th class="col-1 fw-light py-2">Total Time</th>
+            <th class="col-1 fw-light pe-2 py-2">Notes</th>
+        </tr>
+    </thead>
+    
+    {{#if message}}
+    <tbody>
+        <tr>
+            <td colspan="9">
+                <p class="text-center m-1 text-{{message.type}}" id="text_output">{{message.text}}</p>
+            </td>
+        </tr>
+    </tbody>
+    <script>
+        if (window.history.replaceState) {
+            const url = window.location.href.split('?')[0];
+            window.history.replaceState({}, document.title, url);
+        }
+    </script>
+    {{/if}}
+
+    <tbody>
+    {{#each grouped_project_attributes}}
+        {{#each this.dates}}
+            {{#each this.e}}
+            <tr>
+                <td class="py-2 text-center">
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dd{{this._id}}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-book-open text-info"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/viewTime/{{this._id}}"><i class="fa-solid fa-eye text-primary"></i> View</a></li>
+                            <li><a class="dropdown-item" href="/editTime/{{this._id}}"><i class="fa-solid fa-pen-to-square text-danger"></i> Edit</a></li>
+                        </ul>
+                    </div>
+                </td>
+                <td class="py-2">{{this.employeeName}}</td>
+                <td class="py-2">{{formatDate this.dateEntry}}</td>
+                <td class="py-2">{{this.project}}</td>
+                <td class="py-2">{{this.task}}</td>
+                <td class="py-2">{{this.timeFrom}}</td>
+                <td class="py-2">{{this.timeTo}}</td>
+                <td class="py-2">{{this.totalTime}}</td>
+                <td class="py-2 position-relative">
+                    <div class="note-tooltip-container" onclick="toggleTooltip(this)">
+                        <i class="fa-regular fa-comment"></i>
+                        <div class="note-tooltip">
+                            <strong>Task Note</strong><br>
+                            {{this.timeNote}}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {{/each}}
+
+            <tr class="fw-light">
+                <td colspan="7" class="bg-secondary text-white text-end pe-5 py-0">
+                    Total for {{@../key}} on {{@key}}:
+                </td>
+                <td class="bg-secondary text-white py-0" colspan="3">{{this.total_str}}</td>
+            </tr>
+        {{/each}}
+
+        <tr class="fw-light">
+            <td colspan="7" class="bg-warning text-end py-0 pe-5">Total for {{@key}}:</td>
+            <td colspan="3" class="bg-warning py-0">{{this.total_emp_str}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+
+<style>
+    .note-tooltip-container {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        max-width: 100%;
+    }
+    .note-tooltip {
+        position: absolute;
+        z-index: 999;
+        width: 250px;
+        background-color: #fff;
+        color: #000;
+        text-align: left;
+        border-radius: 6px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        font-size: 1rem;
+        white-space: normal;
+        transition: opacity 0.3s ease;
+        opacity: 0;
+        visibility: hidden;
+        top: 100%;
+        left: 0;
+        margin-top: 5px;
+    }
+    .note-tooltip.show {
+        visibility: visible;
+        opacity: 1;
+    }
+    @media (min-width: 768px) {
+        .note-tooltip-container {
+            max-width: unset;
+        }
+        .note-tooltip {
+            right: auto;
+        }
+        .note-tooltip-container:last-child .note-tooltip {
+            left: auto;
+            right: 0;
+        }
+    }
+</style>
+
+<script>
+    function toggleTooltip(element) {
+        let tooltip = element.querySelector('.note-tooltip');
+        tooltip.classList.toggle('show');
+    }
+    document.addEventListener('click', function(event) {
+        let visibleTooltips = document.querySelectorAll('.note-tooltip.show');
+        visibleTooltips.forEach(function(tooltip) {
+            if (!tooltip.contains(event.target) && !tooltip.parentElement.contains(event.target)) {
+                tooltip.classList.remove('show');
+            }
+        });
+    });
+</script>

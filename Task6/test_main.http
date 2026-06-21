@@ -1,0 +1,70 @@
+# Test your FastAPI endpoints
+
+
+###
+
+GET http://127.0.0.1:8000/timelog/
+Content-Type: application/json
+Accept: application/json
+
+###
+
+POST http://127.0.0.1:8000/timelog/filter
+Content-Type: application/json
+Accept: application/json
+
+{
+    "action": "filter",
+    "project": "ACC - RI Digitization",
+    "member": "John Smith",
+    "date_range": "2024-09-20",
+    "range2": "2025-10-30"
+}
+
+###
+
+POST http://127.0.0.1:8000/timelog/
+Content-Type: application/json
+Accept: application/json
+
+{
+    "employee_name": "John Doe",
+    "project_name": "ACC - RI Digitization",
+    "task_name": "SUPPORT - Support",
+    "entry_date": "2025-10-29",
+    "time_from": "2025-10-29T03:00",
+    "time_to": "2025-10-29T06:00",
+    "total_time": "",
+    "time_note": "hello afternoon"
+}
+
+###
+
+GET http://127.0.0.1:8000/timelog/2
+Content-Type: application/json
+Accept: application/json
+
+###
+
+PUT http://127.0.0.1:8000/timelog/3
+Content-Type: application/json
+Accept: application/json
+
+{
+    "employee_name": "John Smith",
+    "project_name": "ACC - RI Digitization",
+    "task_name": "SUPPORT - Support",
+    "entry_date": "2025-10-29",
+    "time_from": "2025-10-29T03:00",
+    "time_to": "2025-10-29T06:00",
+    "total_time": "",
+    "time_note": "good morning"
+}
+
+###
+
+DELETE http://127.0.0.1:8000/timelog/3
+Content-Type: application/json
+Accept: application/json
+
+###

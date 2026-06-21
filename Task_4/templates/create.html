@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+ <div class="container card mt-3 mb-3 p-2 col-md-9 col-sm-9 col-10 border-primary">
+    <form class="inline-form" method="post" autocomplete="off">
+        <div class="form-group col-md-12 ">
+            <div class="form-group row mb-1  ">
+                <div class="d-inline-flex col-md-12 ">
+                    <label class="col-form-label col-md-2 col-sm-3 col-3 text-end me-3 " for="timelog_id">Timelog Id: </label>
+                    <input class="form-control " required id="timelog_id" name="timelog_id" disabled {% if mode == 'view' or mode == 'edit' %} value="{{ data.timelog_id }}" {% endif %} value="#" placeholder="Timelog Id" >
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+                <div class="d-inline-flex col-md-12">
+                    <label class="col-form-label col-md-2 col-sm-3 col-3 text-end me-3" for="employee">Employee:</label>
+                    <select class="form-select" required id="employee" name="employee" {% if mode == 'view' %}disabled{% endif %} >
+                        <option value="">Select an option</option>
+                        {% for m in members %}#}
+                            <option {% if mode == 'view' or mode == 'edit' or mode == 'add'%}value="{{ m[0] }}" {% if m[0] == data.employee_name %}selected  {% endif %} {% elif form_data and form_data['employee'] == m[0]|string %}selected{% endif %}>{{ m[0] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+                <div class="d-inline-flex col-md-12  ">
+                    <label class="col-form-label col-md-2 col-sm-3 col-3 text-end me-3" for="project">Project:</label>
+                    <select class="form-select" required id="project" name="project" {% if mode == 'view' %}disabled{% endif %}>
+                        <option value="">Select an option</option>
+                        {% for project in projects %}
+                            <option {% if mode == 'view' or mode == 'edit' or mode == 'add'%}value="{{ project[0] }}" {% if project[0] == data.project_id %}selected {% endif %} {% elif form_data and form_data['project'] == project[0]|string %}selected{% endif %}>{{ project[0] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+                <div class="d-inline-flex col-md-12  ">
+                    <label class="col-form-label col-md-2 col-sm-3 col-3 text-end me-3" for="task">Task:</label>
+                     <select class="form-select" required id="task" name="task" {% if mode == 'view' %}disabled{% endif %} >
+                        <option value="">Select an option</option>
+                        {% for t in task %}
+                            <option {% if mode == 'view' or mode == 'edit' or mode == 'add'%}value="{{ t[0] }}" {% if t[0] == data.task_id %}selected {% endif %}{% elif form_data and form_data['task'] == t[0]|string %}selected{% endif %}>{{ t[0] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12 d-inline-flex mb-1">
+                    <label class="col-form-label col-md-2 col-sm-3 col-3 text-end me-3" for="time_date">Date:</label>
+                    <div class="input-group date w-25">
+                        <input class="form-control form-control-color date" required id="time_date" name="time_date" type="date" {% if mode == 'view' %}disabled{% endif %} value="{% if mode == 'view' or mode == 'edit' or mode == 'add'%}{{ data.date }}{% elif form_data %}{{ form_data.time_date }}{% endif %}" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+                <div class="d-inline-flex col-md-12  ">
+                    <label class="col-form-label col-md-2 col-sm-3 col-3 text-end me-3 " for="time_note">Time Note:</label>
+                    <textarea class="form-control" required id="time_note" name="time_note" rows="3" placeholder="Time Note" {% if mode == 'view' %}disabled{% endif %} autocomplete="off">{% if mode == 'view' or mode == 'edit' or mode == 'add'%}{{ data.note }}{% elif form_data %}{{ form_data.time_note }}{% endif %}</textarea>
+                </div>
+            </div>
+            <div class="form-group row col-md-12">
+                <div class="col-md-12 d-inline-flex mb-1">
+                    <label class="col-form-label col-md-2 col-sm-3 col-3 text-end me-3" for="time_duration">Time Duration:</label>
+                    <input class="form-control w-25 ms-1 pe-2" id="time_from" name="time_from" type="text" placeholder="Time From" {% if mode == 'view' %}disabled{% endif %}
+                    value="{% if (mode == 'view' or mode == 'edit' or mode == 'add') and data.time_from %}{{ data.time_from|to_hhmm }}{% elif form_data %}{{ form_data.time_from }}{% endif %}" autocomplete="off">
+                    <input class="form-control w-25 ms-5" id="time_to" name="time_to" type="text" placeholder="Time To" {% if mode == 'view' %}disabled{% endif %}
+                    value="{% if (mode == 'view' or mode == 'edit' or mode == 'add') and data.time_to %}{{ data.time_to|to_hhmm }}{% elif form_data %}{{ form_data.time_to }}{% endif %}" autocomplete="off">
+
+                </div>
+            </div>
+            <div class="form-group row col-md-12">
+                <div class="col-md-12 d-inline-flex mb-1">
+                    <label class="col-form-label col-md-2 col-sm-3 col-3 text-end me-3" for="total_time">Total Time:</label>
+                    <input class="form-control w-25 ms-1 pe-2" id="total_time" name="total_time" type="text" placeholder="Total Time" {% if mode == 'view' %}disabled{% endif %}
+                    value="{% if (mode == 'view' or mode == 'edit' or mode == 'add') and data.total_time %}{{ data.total_time|to_hhmm }}{% elif form_data %}{{ form_data.total_time }}{% endif %}" autocomplete="off">
+                    <label class="col-form-label w-25 text-info ms-5" >HH:MM</label>
+                </div>
+            </div>
+            <div class="form-group row col-md-12 p-3">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                      {% for category, message in messages %}
+                          <p class="text-center m-1 text-{{ category }}" id="text_output">{{ message }}</p>
+                      {% endfor %}
+                  {% endif %}
+                {% endwith %}
+
+            </div>
+            <div class="form-group row  col-md-offset-2 mt-2 justify-content-center ">
+                {% if mode == 'view' %}
+                    <a class="btn btn-outline-info w-auto col-md-2 me-1 mb-1" href="{{ url_for('editTime', id=data['timelog_id']) }}"><i class="fa-solid fa-pen-to-square text-danger"></i> Switch to Update</a>
+                    <a class="btn btn-outline-info w-auto col-md-2 me-1 mb-1" href="{{ url_for('index') }}">Goto: Project Time List</a>
+                {% elif mode == 'edit' %}
+                    <button class="btn btn-primary w-auto col-md-1 me-1 mb-1" type="submit"><i class="fa-solid fa-floppy-disk text-warning"></i> Save</button>
+{#                    <button class="btn btn-danger w-auto col-md-1 me-1 mb-1" type="submit" name="action" value="delete" formaction="{{ url_for('delete', id=data.timelog_id) }}" onclick="return confirm('Are you sure you want to delete this timelog?');"><i class="fa-solid fa-trash-can text-warning" ></i> Delete</button>#}
+                    <button type="button" class="btn btn-danger w-auto col-md-1 me-1 mb-1" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-solid fa-trash-can text-warning"></i> Delete</button>
+                    <a class="btn btn-outline-info w-auto col-md-2 me-1 mb-1" href="{{ url_for('viewTime', id=data['timelog_id']) }}"><i class="fa-solid fa-pen-to-square text-danger"></i> Switch to View</a>
+                    <a class="btn btn-outline-info w-auto col-md-2 me-1 mb-1" href="{{ url_for('index') }}">Goto: Project Time List</a>
+                {% else %}
+                    <button class="btn btn-primary w-auto col-md-1 me-1 mb-1" type="submit"><i class="fa-solid fa-floppy-disk text-warning"></i> Save</button>
+                    <a class="btn btn-outline-info w-auto col-md-2 me-1 mb-1" href="{{ url_for('index') }}">Goto: Project Time List</a>
+                {% endif %}
+            </div>
+        </div>
+    </form>
+ </div>
+<div class="modal fade" id="deleteModal"  >
+  <div class="modal-dialog  " >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this timelog?
+      </div>
+      <div class="modal-footer">
+        <form method="post" action="{{ url_for('delete', id=data.timelog_id) }}">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if mode == 'edit' or mode == 'view' or mode == 'add' and data %}
+  <input type="hidden" name="timelog_id" value="{{ data.timelog_id }}">
+  <input type="hidden" name="employee_hidden" value="{{ data.employee_name }}">
+  <input type="hidden" name="project_hidden" value="{{ data.project_id }}">
+  <input type="hidden" name="task_hidden" value="{{ data.task_id }}">
+  <input type="hidden" name="date_hidden" value="{{ data.date }}">
+  <input type="hidden" name="note_hidden" value="{{ data.note }}">
+  <input type="hidden" name="time_from_hidden" value="{{ data.time_from }}">
+  <input type="hidden" name="time_to_hidden" value="{{ data.time_to }}">
+  <input type="hidden" name="total_time_hidden" value="{{ data.total_time }}">
+{% endif %}
+
+{% endblock %}

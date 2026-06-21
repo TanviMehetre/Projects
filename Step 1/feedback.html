@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step 1</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <nav class="nav collapsible--expanded">
+        <a class="nav__brand" href="/"><img class="navbar_image" src="images/DesignFirm.png" alt="" /></a>
+        <svg class="icon icon--white nav__toggler">
+          <use xlink:href="images/sprite.svg#menu"></use>
+        </svg>
+        <ul class="list nav__list collapsible__content">
+            <li class="nav__item"><a href="index.html">Home</a></li>
+            <li class="nav__item"><a href="Portfolio.html">Portfolio</a></li>
+            <li class="nav__item"><a href="about.html">About</a></li>
+            <li class="nav__item"><a href="feedback.html">Feedback</a></li>
+        </ul>
+    </nav>
+
+
+    <header class="block__header normal__page">
+        <h2>Feedback Form</h2>
+    </header>
+
+    <div class="card  card--primary feedback">
+        <div class="card__body">
+            <form>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input id="name" type="text" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" />
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input id="phone" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="Organization">Organization</label>
+                    <input id="Organization" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="feedback">Feedback</label>
+                    <textarea id="feedback" rows="5"></textarea>
+                </div>
+                <button class="btn btn--secondary" type="submit">Submit</button>
+                <button class="btn btn--accent" type="reset">Reset</button>
+            </form>
+        </div>
+    </div>
+
+    <header class="block__header">
+        <h2>Hear From Our Customers</h2>
+        <p>
+            Take a look at what our previous customers have to say about our studio.
+        </p>
+    </header>
+    <div class="card testimonial">
+        <div class="grid grid--cols-2">
+            <div class="testimonial__image">
+                <img src="images/Ani.jpg" alt="A happy, smiling customer" />
+            </div>
+            <blockquote class="quote">
+                <p class="quote__text">
+                    The final product and design was exactly what was envisioned! It was like a Pinterest page come to life. Will definetely recommend and use the service again. The team was awesome, Thank you!
+                </p>
+                <footer>
+                    <div class="media">
+                        <div class="media__image">
+                            <svg class="icon icon--primary quote__line">
+                  <use xlink:href="images/sprite.svg#line"></use>
+                </svg>
+                        </div>
+                        <div class="media__body">
+                            <h3 class="media__title quote__author">Aniruddha Mehetre</h3>
+                            <p class="quote__organization">SRM Chennai</p>
+                        </div>
+                    </div>
+                </footer>
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="card testimonial">
+        <div class="grid grid--cols-2">
+            <div class="testimonial__image">
+                <img src="images/Aaryan.webp" alt="A happy, smiling customer" />
+
+            </div>
+            <blockquote class="quote">
+                <p class="quote__text">
+                    Such a wonderful and amazing team to work with. This experience of putting together a home was extraordinary and the team here helped with all they had and produced an amazing result. Thanks!
+                </p>
+                <footer>
+                    <div class="media">
+                        <div class="media__image">
+                            <svg class="icon icon--primary quote__line">
+                  <use xlink:href="images/sprite.svg#line"></use>
+                </svg>
+                        </div>
+                        <div class="media__body">
+                            <h3 class="media__title quote__author">Aaryan Phule</h3>
+                            <p class="quote__organization">MIT Pune</p>
+                        </div>
+                    </div>
+                </footer>
+            </blockquote>
+        </div>
+    </div>
+
+
+
+    <footer class="block block--dark footer">
+        <div class="container grid footer__sections">
+            <section class="collapsible collapsible--expanded footer__section">
+                <div class="collapsible__header">
+                    <h2 class="collapsible__heading footer__heading">Contact </h2>
+                    <svg class="icon icon--white collapsible__chevron">
+                <use xlink:href="images/sprite.svg#chevron"></use>
+              </svg>
+                </div>
+                <div class="collapsible__content">
+                    <ul class="list">
+                        <li>
+                            <a href="#">tanvi@gmail.com</a>
+                        </li>
+                        <li>
+                            <a href="#">+1 123-456-7891</a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section class="collapsible collapsible--expanded footer__section">
+                <div class="collapsible__header">
+                    <h2 class="collapsible__heading footer__heading">Terms of Service</h2>
+                    <svg class="icon icon--white collapsible__chevron">
+                <use xlink:href="images/sprite.svg#chevron"></use>
+              </svg>
+                </div>
+                <div class="collapsible__content">
+                    <ul class="list">
+                        <li>
+                            <a href="#">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="#">Copyright rules</a>
+                        </li>
+                        <li>
+                            <a href="#">User Behavior</a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section class="collapsible collapsible--expanded footer__section">
+                <div class="collapsible__header">
+                    <h2 class="collapsible__heading footer__heading">Social Media </h2>
+                    <svg class="icon icon--white collapsible__chevron">
+                <use xlink:href="images/sprite.svg#chevron"></use>
+              </svg>
+                </div>
+                <div class="collapsible__content">
+                    <ul class="list">
+                        <li class="footer-icon">
+                            <svg class="icon icon--white">
+                                <use  xlink:href="images/insta.svg"></use>
+                            </svg>
+                            <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+                        </li>
+                        <li class="footer-icon">
+                            <svg class="icon icon--white">
+                                <use  xlink:href="images/facebook.svg"></use>
+                            </svg>
+                            <a href="https://www.facebook.com/" target="_blank">Facebook</a>
+                        </li>
+                        <li class="footer-icon">
+                            <svg class="icon icon--white">
+                                <use  xlink:href="images/youtube.svg"></use>
+                            </svg>
+                            <a href="https://www.youtube.com/" target="_blank">Youtube</a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section class="collapsible collapsible--expanded footer__section">
+                <div class="collapsible__header">
+                    <h2 class="collapsible__heading footer__heading">Our Team</h2>
+                    <svg class="icon icon--white collapsible__chevron">
+                <use xlink:href="images/sprite.svg#chevron"></use>
+              </svg>
+                </div>
+                <div class="collapsible__content">
+                    <ul class="list">
+                        <li>
+                            <a href="#">Tanvi Mehetre</a>
+                        </li>
+                        <li>
+                            <a href="#">Tejal Devshetwar</a>
+                        </li>
+                        <li>
+                            <a href="#">Saie Nale</a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <div class="footer__brand">
+                <img src="images/DesignFirm.png" alt="" />
+            </div>
+        </div>
+        <div class=" copyright">
+            <img class="copyright copyright--image" src="images/cpr.svg" alt="">
+            <p class="copyright">2025 Interior Design</p>
+        </div>
+        <div class=" copyright">
+            <p class="copyright">Images and videos used from Pexels and Pinterest </p>
+        </div>
+    </footer>
+
+
+</body>
+
+</html>
